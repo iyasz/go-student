@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-student/config"
+	"go-student/controllers/homecontroller"
 	"log"
 	"net/http"
 )
@@ -11,7 +12,10 @@ import (
 func main() {
 	config.ConnectDB()
 
-	log.Println("Server Running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	// home 
+	http.HandleFunc("/", homecontroller.Welcome)
+
+	log.Println("Server Running on port 3000")
+	http.ListenAndServe(":3000", nil)
 }
 

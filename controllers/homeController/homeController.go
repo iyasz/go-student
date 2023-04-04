@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func welcome(w http.ResponseWriter, r *http.Request) {
+func Welcome(w http.ResponseWriter, r *http.Request) {
 	temp, err := template.ParseFiles("views/home/index.html")
 	if err != nil {
 		panic(err)
