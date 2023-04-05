@@ -13,3 +13,4 @@ func Welcome(w http.ResponseWriter, r *http.Request) {
 
 	temp.Execute(w, nil)
 }
+
