@@ -1,22 +1,24 @@
 package studentcontroller
 
 import (
+	"go-student/entities"
 	"go-student/models/studentmodel"
 	"html/template"
 	"net/http"
+	"time"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
 	students := studentmodel.GetAll()
 
-	data := map[string]any {
+	data := map[string]any{
 		"student": students,
 	}
-	
+
 	temp, err := template.ParseFiles("views/student/index.html")
 
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 
@@ -24,12 +26,31 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Create(w http.ResponseWriter, r *http.Request) {
-	temp, err := template.ParseFiles("views/student/create.html")
 
-	if err != nil{
-		panic(err)
+	if r.Method == "GET" {
+
+		temp, err := template.ParseFiles("views/student/create.html")
+
+		if err != nil {
+			panic(err)
+		}
+
+		temp.Execute(w, nil)
 	}
 
-	temp.Execute(w, nil)
-}
+	if r.Method == "POST" {
+		var student entities.Student
 
+		student.Nama = r.FormValue("nama")
+		student.Nis = r.FormValue("nis")
+		student.Telp = r.FormValue("telp")
+		student.CreatedAt = time.Now()
+
+		if ok := studentmodel.Store(student); !ok {
+			temp, _ := template.ParseFiles("views/student/create.html")
+			temp.Execute(w, nil)
+		}
+
+		http.Redirect(w, r, "/student", http.StatusSeeOther)
+	}
+}

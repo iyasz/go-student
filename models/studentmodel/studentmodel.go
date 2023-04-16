@@ -27,3 +27,22 @@ func GetAll() []entities.Student {
 
 	return students
 }
+
+func Store(student entities.Student) bool {
+	result, err := config.DB.Exec(`
+		INSERT INTO siswa (nama, nis, telp, created_at)
+		VALUE (? , ?, ?, ?)`,
+		student.Nama, student.Nis, student.Telp, student.CreatedAt,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	LastInsertId, err := result.LastInsertId()
+	if err != nil {
+		panic(err)
+	}
+
+	return LastInsertId > 0
+}
