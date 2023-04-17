@@ -29,40 +29,31 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-11">
-                <div class="card border-0 shadow mt-5">
+            <div class="col-6">
+                <div class="card mt-5">
                     <div class="card-body">
-                        <div class="text-end">
-                            <a href="/student/create" class="btn btn-primary">Create</a>
+                        <div class="/student">
+                            <a href="/student" class="btn btn-primary">Kembali</a>
+                            <h1 class="mt-2">Edit Student</h1>
                         </div>
-                        <div class="table-responsive">
-
-                            <table class="table ">
-                                <thead>
-                                <th></th>
-                                <th>Nama</th>
-                                <th>NIS</th>
-                                <th>Telepon</th>
-                                <th>Created At</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                {{range .student}}
-                                <tr>
-                                    <td>{{ .Id }}</td>
-                                    <td>{{ .Nama }}</td>
-                                    <td>{{ .Nis }}</td>
-                                    <td>{{ .CreatedAt }}</td>
-                                    <td>{{ .Telp }}</td>
-                                    <td>
-                                        <a href="/student/edit?id={{ .Id }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="/student/delete?id={{ .Id }}" class="btn btn-sm btn-danger" onclick="return confirm(`Yakin ingin Menghapus Data {{ .Nama }}?`)">Delete</a>
-                                    </td>
-                                </tr>
-                                {{ end }}
-                            </tbody>
-                        </table>
-                    </div>
+                        <form action="/student/edit" method="post">
+                            <input type="hidden" name="id" value="{{ .student.Id }}">
+                            <div class="mb-4">
+                            <label>Nama</label>
+                            <input autocomplete="off" type="text" class="form-control" value="{{ .student.Nama }}" name="nama" >
+                        </div>
+                        <div class="mb-4">
+                            <label>Nis</label>
+                            <input autocomplete="off" type="number" class="form-control" value="{{ .student.Nis }}" name="nis" >
+                        </div>
+                        <div class="mb-4">
+                            <label>Telp</label>
+                            <input autocomplete="off" type="text" class="form-control" value="{{ .student.Telp }}" name="telp" >
+                        </div>
+                        <div class="">
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>

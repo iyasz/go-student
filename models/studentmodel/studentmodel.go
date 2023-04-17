@@ -46,3 +46,14 @@ func Store(student entities.Student) bool {
 
 	return LastInsertId > 0
 }
+
+func Detail(id int) entities.Student {
+	row := config.DB.QueryRow(`SELECT id, nama, nis, telp FROM siswa WHERE id = ?`, id)
+
+	var student entities.Student
+	if err := row.Scan(&student.Id, &student.Nama, &student.Nis, &student.Telp); err != nil {
+		panic(err.Error())
+	}
+
+	return student
+}

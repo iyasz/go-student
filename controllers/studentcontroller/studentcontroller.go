@@ -5,6 +5,7 @@ import (
 	"go-student/models/studentmodel"
 	"html/template"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -53,4 +54,36 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/student", http.StatusSeeOther)
 	}
+}
+
+func Edit(w http.ResponseWriter, r *http.Request){
+	if r. Method == "GET" {
+		temp, err := template.ParseFiles("views/student/edit.html")
+
+		if err != nil {
+			panic(err)
+		}
+
+		idString := r.URL.Query().Get("id")
+		id, err := strconv.Atoi(idString)
+
+		if err != nil {
+			panic(err)
+		}
+
+		student := studentmodel.Detail(id)
+		data := map[string]any{
+			"student": student,
+		}
+
+		temp.Execute(w, data)
+	}
+
+	if r.Method == "POST" {
+		
+	}
+}
+
+func Delete(w http.ResponseWriter, r *http.Request){
+
 }

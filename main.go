@@ -19,6 +19,7 @@ func main() {
 	// student 
 	http.HandleFunc("/student", studentcontroller.Index)
 	http.HandleFunc("/student/create", studentcontroller.Create)
+	http.HandleFunc("/student/edit", studentcontroller.Edit)
 	
 	// http.HandleFunc("/student/edit", studentcontroller.Edit)
 	// http.HandleFunc("/student/", studentcontroller.Index)
