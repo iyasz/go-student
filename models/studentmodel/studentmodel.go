@@ -57,3 +57,19 @@ func Detail(id int) entities.Student {
 
 	return student
 }
+
+func Update(id int, student entities.Student) bool {
+	query, err := config.DB.Exec(`UPDATE siswa SET nama = ?, nis = ?, telp = ? WHERE id = ?`, student.Nama, student.Nis, student.Telp, id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	result, err := query.RowsAffected()
+
+	if err != nil {
+		panic(err)
+	}
+	
+	return result > 0
+}

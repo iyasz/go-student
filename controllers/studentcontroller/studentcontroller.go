@@ -80,7 +80,24 @@ func Edit(w http.ResponseWriter, r *http.Request){
 	}
 
 	if r.Method == "POST" {
-		
+		var student entities.Student
+
+		idString := r.FormValue("id")
+		id, err := strconv.Atoi(idString)
+		if err != nil {
+			panic(err)
+		}
+
+		student.Nama = r.FormValue("nama")
+		student.Nis = r.FormValue("nis")
+		student.Telp = r.FormValue("telp")
+
+		if ok := studentmodel.Update(id, student); !ok {
+			http.Redirect(w, r, r.Header.Get("Referer"), http.StatusSeeOther)
+			return
+		}
+
+		http.Redirect(w, r, "/student", http.StatusSeeOther)
 	}
 }
 
