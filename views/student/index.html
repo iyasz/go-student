@@ -52,8 +52,8 @@
                                     <td>{{ .Id }}</td>
                                     <td>{{ .Nama }}</td>
                                     <td>{{ .Nis }}</td>
-                                    <td>{{ .CreatedAt }}</td>
                                     <td>{{ .Telp }}</td>
+                                    <td>{{ .CreatedAt }}</td>
                                     <td>
                                         <a href="/student/edit?id={{ .Id }}" class="btn btn-sm btn-primary">Edit</a>
                                         <a href="/student/delete?id={{ .Id }}" class="btn btn-sm btn-danger" onclick="return confirm(`Yakin ingin Menghapus Data {{ .Nama }}?`)">Delete</a>

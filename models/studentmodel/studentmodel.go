@@ -73,3 +73,8 @@ func Update(id int, student entities.Student) bool {
 	
 	return result > 0
 }
+
+func Delete(id int) error {
+	_, err := config.DB.Exec(`DELETE FROM siswa WHERE id = ?`, id)
+	return err
+}

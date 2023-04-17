@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/student", studentcontroller.Index)
 	http.HandleFunc("/student/create", studentcontroller.Create)
 	http.HandleFunc("/student/edit", studentcontroller.Edit)
+	http.HandleFunc("/student/delete", studentcontroller.Delete)
 	
 	// http.HandleFunc("/student/edit", studentcontroller.Edit)
 	// http.HandleFunc("/student/", studentcontroller.Index)
