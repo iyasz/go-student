@@ -18,7 +18,7 @@ func GetAll() []entities.Student {
 
 	for rows.Next() {
 		var student entities.Student
-		if err := rows.Scan(&student.Id, &student.Nama, &student.Nis, &student.Telp, &student.CreatedAt); err != nil {
+		if err := rows.Scan(&student.Id, &student.Nama ,&student.Nis , &student.Umur , &student.Gender, &student.Telp, &student.Alamat, &student.CreatedAt); err != nil {
 			panic(err)
 		}
 
@@ -30,9 +30,9 @@ func GetAll() []entities.Student {
 
 func Store(student entities.Student) bool {
 	result, err := config.DB.Exec(`
-		INSERT INTO siswa (nama, nis, telp, created_at)
-		VALUE (? , ?, ?, ?)`,
-		student.Nama, student.Nis, student.Telp, student.CreatedAt,
+		INSERT INTO siswa (nama, nis, umur, gender, telp, alamat, created_at)
+		VALUE (? , ? , ? , ? , ? , ? , ?)`,
+		student.Nama, student.Nis, student.Umur, student.Gender, student.Telp, student.Alamat, student.CreatedAt,
 	)
 
 	if err != nil {
@@ -48,10 +48,10 @@ func Store(student entities.Student) bool {
 }
 
 func Detail(id int) entities.Student {
-	row := config.DB.QueryRow(`SELECT id, nama, nis, telp FROM siswa WHERE id = ?`, id)
+	row := config.DB.QueryRow(`SELECT id, nama, nis, umur, gender, telp, alamat FROM siswa WHERE id = ?`, id)
 
 	var student entities.Student
-	if err := row.Scan(&student.Id, &student.Nama, &student.Nis, &student.Telp); err != nil {
+	if err := row.Scan(&student.Id, &student.Nama, &student.Nis, &student.Umur, &student.Gender, &student.Telp, &student.Alamat); err != nil {
 		panic(err.Error())
 	}
 
@@ -59,7 +59,7 @@ func Detail(id int) entities.Student {
 }
 
 func Update(id int, student entities.Student) bool {
-	query, err := config.DB.Exec(`UPDATE siswa SET nama = ?, nis = ?, telp = ? WHERE id = ?`, student.Nama, student.Nis, student.Telp, id)
+	query, err := config.DB.Exec(`UPDATE siswa SET nama = ?, nis = ?, umur = ?, gender = ?, telp = ?, alamat = ? WHERE id = ?`, student.Nama, student.Nis, student.Umur, student.Gender, student.Telp, student.Alamat, id)
 
 	if err != nil {
 		panic(err)

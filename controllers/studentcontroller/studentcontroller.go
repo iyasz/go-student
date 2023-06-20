@@ -26,6 +26,28 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	temp.Execute(w, data)
 }
 
+func Detail(w http.ResponseWriter, r *http.Request){
+	temp, err := template.ParseFiles("views/student/detail.html")
+
+	if err != nil {
+		panic(err)
+	}
+
+	idString := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(idString)
+
+	if err != nil {
+		panic(err)
+	}
+
+	student := studentmodel.Detail(id)
+	data := map[string]any{
+		"student": student,
+	}
+
+	temp.Execute(w, data)
+}
+
 func Create(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
@@ -44,7 +66,10 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 		student.Nama = r.FormValue("nama")
 		student.Nis = r.FormValue("nis")
+		student.Umur = r.FormValue("umur")
+		student.Gender = r.FormValue("gender")
 		student.Telp = r.FormValue("telp")
+		student.Alamat = r.FormValue("alamat")
 		student.CreatedAt = time.Now()
 
 		if ok := studentmodel.Store(student); !ok {
@@ -90,7 +115,10 @@ func Edit(w http.ResponseWriter, r *http.Request){
 
 		student.Nama = r.FormValue("nama")
 		student.Nis = r.FormValue("nis")
+		student.Umur = r.FormValue("umur")
+		student.Gender = r.FormValue("gender")
 		student.Telp = r.FormValue("telp")
+		student.Alamat = r.FormValue("alamat")
 
 		if ok := studentmodel.Update(id, student); !ok {
 			http.Redirect(w, r, r.Header.Get("Referer"), http.StatusSeeOther)

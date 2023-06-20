@@ -8,24 +8,22 @@ import (
 	"net/http"
 )
 
-
-
 func main() {
 	config.ConnectDB()
 
-	// home 
+	// home
 	http.HandleFunc("/", homecontroller.Welcome)
 
-	// student 
+	// student
 	http.HandleFunc("/student", studentcontroller.Index)
 	http.HandleFunc("/student/create", studentcontroller.Create)
 	http.HandleFunc("/student/edit", studentcontroller.Edit)
 	http.HandleFunc("/student/delete", studentcontroller.Delete)
-	
+	http.HandleFunc("/student/detail", studentcontroller.Detail)
+
 	// http.HandleFunc("/student/edit", studentcontroller.Edit)
 	// http.HandleFunc("/student/", studentcontroller.Index)
 
 	log.Println("Server Running on port 3000")
 	http.ListenAndServe(":3000", nil)
 }
-
